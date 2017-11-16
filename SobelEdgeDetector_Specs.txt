@@ -1,0 +1,97 @@
+
+Project 6: Implementation of Sobel Edge Detector.
+	     
+
+**************************************
+Language: C++
+
+*************************************
+
+I. Input (argv[1]): a txt file representing a grey-scale image with header. 
+
+II. Output1 (argv[2]): for one of the output, see algorithm below.	
+    Output2 (args[3]): for one of the output, see algorithm below.	
+	
+*******************************
+III. Data structure:
+*******************************
+ -  an ImageProcessing class
+
+    - friend class SobelEdge
+
+	- numRows (int)
+	- numCols (int)
+	- minVal (int)
+	- maxVal (int)
+ 
+	- imgAry (int **) a 2D array, need to dynamically allocate at run time
+			of size numRows+2 by numCols+2.
+
+    - methods:
+	- constructor(s) // need to dynamically allocate the two (2) arrays 
+				and assign values to numRows,..., etc.
+	- loadImage // load imgAry from input file to imgAry
+    	- mirrorFramed
+	- prettyPrint
+
+  -  a SobelEdge class
+
+	- maskVertical[3][3] (int) // may be hard coded.
+	- maskHorizontal[3][3] (int) // may be hard coded.
+	- maskRightDiag[3][3] (int)// may be hard coded.
+	- maskLeftDiag[3][3] (int)// may be hard coded.
+
+	- SobelVertical (int **) a 2D array, need to dynamically allocate at run time
+			of size numRows+2 by numCols+2. 
+	- SobelHorizontal (int **) a 2D array, need to dynamically allocate at run time
+			of size numRows+2 by numCols+2.
+	- SobelRightDiag (int **) a 2D array, need to dynamically allocate at run time
+			of size numRows+2 by numCols+2.
+	- SobelLeftDiag (int **) a 2D array, need to dynamically allocate at run time
+			of size numRows+2 by numCols+2.
+	- SobelVHSum (int **) a 2D array, need to dynamically allocate at run time
+			of size numRows+2 by numCols+2.
+	- SobelDiagSum (int **) a 2D array, need to dynamically allocate at run time
+			of size numRows+2 by numCols+2.
+
+	// I know you don't need all these six arrays, just for easy processing purposes.
+
+ - methods:
+
+	-convolute (i,j, mask)// do a 3x3 convolution on img[i,j] with the mask and  return the result)
+     
+*******************************
+III. Algorithms for Sobel Edge Detector
+*******************************
+  
+step 0: open the image and read the image header
+	   dynamically allocate imgAry and all the other sobel arrays
+
+step 1: loadImage // load input file to imgAry
+
+step 2: mirrowFramed (imgAry)
+
+step 3: process the imgAry, from left to right and top to bottom
+	  begin at (1, 1)
+
+	SobelVertical(i,j) <-- convolute (i,j, maskVertical)
+	SobelHorizontal(i,j) <-- convolute (i,j, maskHorizontal)
+	SobelRightDiag(i,j) <-- convolute (i,j, maskRightDiag)
+	SobelLeftDiag(i,j) <-- convolute (i,j, maskLeftDiag)
+	SobelVHSum(i,j) <-- abs( SobelVertical(i,j)) + abs( SobelHorizontal(i,j))
+	SobelDiagSum(i,j) <-- abs( SobelRightDiag(i,j)) + abs( SobelLeftDiag(i,j))
+	
+ step 4: 	write SobelVHSum to argv[2] // for further processing 
+		write SobelDiagSum to argv[3] // for further processing 
+
+step 5: Using your exiting programs: to do
+
+ 		Compute histogram for SobelVHSum
+	     select a threshold value and threshold SobelVHSum
+		prettyPring the thresholded SobelVHSum
+
+	     Compute histogram for SobelDiagSum
+	     select a threshold value and threshold SobelDiagSum
+		prettyPring the thresholded SobelDiagSum
+
+
