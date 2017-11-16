@@ -1,0 +1,29 @@
+step 0: open the image and read the image header
+	   dynamically allocate imgAry and all the other sobel arrays
+
+step 1: loadImage // load input file to imgAry
+
+step 2: mirrorFramed (imgAry)
+
+step 3: process the imgAry, from left to right and top to bottom
+	begin at (1, 1)
+
+	SobelVertical(i,j) <-- convolute (i,j, maskVertical)
+	SobelHorizontal(i,j) <-- convolute (i,j, maskHorizontal)
+	SobelRightDiag(i,j) <-- convolute (i,j, maskRightDiag)
+	SobelLeftDiag(i,j) <-- convolute (i,j, maskLeftDiag)
+	SobelVHSum(i,j) <-- abs( SobelVertical(i,j)) + abs( SobelHorizontal(i,j))
+	SobelDiagSum(i,j) <-- abs( SobelRightDiag(i,j)) + abs( SobelLeftDiag(i,j))
+	
+ step 4: 	write SobelVHSum to argv[2] // for further processing 
+	write SobelDiagSum to argv[3] // for further processing 
+
+step 5: Using your exiting programs: to do
+
+ 	Compute histogram for SobelVHSum
+	select a threshold value and threshold SobelVHSum
+prettyPring the thresholded SobelVHSum
+
+Compute histogram for SobelDiagSum
+	select a threshold value and threshold SobelDiagSum
+	prettyPring the thresholded SobelDiagSum
